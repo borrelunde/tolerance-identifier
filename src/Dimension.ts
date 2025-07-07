@@ -25,4 +25,20 @@ export class Dimension {
     getMillimetres(): number {
         return this.mm;
     }
+
+    greaterThan(other: Dimension): boolean {
+        return this.mm > other.getMillimetres();
+    }
+
+    greaterThanOrEqual(other: Dimension): boolean {
+        return this.mm >= other.getMillimetres();
+    }
+
+    lessThan(other: Dimension): boolean {
+        return this.mm < other.getMillimetres();
+    }
+
+    lessThanOrEqual(other: Dimension): boolean {
+        return this.mm <= other.getMillimetres();
+    }
 }
