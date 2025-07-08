@@ -87,4 +87,61 @@ describe('ISO 2768-1 Tolerance Standard Identifier', () => {
             });
         });
     });
+
+    const iso2768mTestGroups = [
+        {
+            // Dimensions that are the lowest in the nominal size range for medium tolerance.
+            type: 'Floor dimensions',
+            cases: [
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(0.5), SymmetricalTolerance.fromMillimetres(0.1)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(3.01), SymmetricalTolerance.fromMillimetres(0.1)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(6.01), SymmetricalTolerance.fromMillimetres(0.2)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(30.01), SymmetricalTolerance.fromMillimetres(0.3)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(120.01), SymmetricalTolerance.fromMillimetres(0.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(400.01), SymmetricalTolerance.fromMillimetres(0.8)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1000.01), SymmetricalTolerance.fromMillimetres(1.2)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(2000.01), SymmetricalTolerance.fromMillimetres(2.0))
+            ]
+        },
+        {
+            // Dimensions that are the highest in the nominal size range for medium tolerance.
+            type: 'Ceiling dimensions',
+            cases: [
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(3), SymmetricalTolerance.fromMillimetres(0.1)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(6), SymmetricalTolerance.fromMillimetres(0.1)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(30), SymmetricalTolerance.fromMillimetres(0.2)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(120), SymmetricalTolerance.fromMillimetres(0.3)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(400), SymmetricalTolerance.fromMillimetres(0.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1000), SymmetricalTolerance.fromMillimetres(0.8)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(2000), SymmetricalTolerance.fromMillimetres(1.2)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(4000), SymmetricalTolerance.fromMillimetres(2.0))
+            ]
+        },
+        {
+            // Tolerances that are just below the coarse tolerance class.
+            type: 'Ceiling tolerances',
+            cases: [
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1), SymmetricalTolerance.fromMillimetres(0.2 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(4), SymmetricalTolerance.fromMillimetres(0.3 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(10), SymmetricalTolerance.fromMillimetres(0.5 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(50), SymmetricalTolerance.fromMillimetres(0.8 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(200), SymmetricalTolerance.fromMillimetres(1.2 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(800), SymmetricalTolerance.fromMillimetres(2.0 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1500), SymmetricalTolerance.fromMillimetres(3.0 - 0.01)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(3000), SymmetricalTolerance.fromMillimetres(4.0 - 0.01))
+            ]
+        }
+    ];
+
+    describe('ISO 2768-m tests', () => {
+        iso2768mTestGroups.forEach(group => {
+            describe(group.type, () => {
+                test.each(group.cases)(`should identify ISO 2768-m for %s`, (dimensionWithTolerance: DimensionWithTolerance) => {
+                        const result = identifier.identifyToleranceStandard(dimensionWithTolerance);
+                        expect(result).toStrictEqual(Iso2768ToleranceStandard.fromToleranceClass('m'));
+                    }
+                );
+            });
+        });
+    });
 });
