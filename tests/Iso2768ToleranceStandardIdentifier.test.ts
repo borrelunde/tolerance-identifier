@@ -201,4 +201,60 @@ describe('ISO 2768-1 Tolerance Standard Identifier', () => {
             });
         });
     });
+
+    const iso2768vTestGroups = [
+        {
+            // Dimensions that are the lowest in the nominal size range for very coarse tolerance.
+            type: 'Floor dimensions',
+            cases: [
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(3.01), SymmetricalTolerance.fromMillimetres(0.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(6.01), SymmetricalTolerance.fromMillimetres(1.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(30.01), SymmetricalTolerance.fromMillimetres(1.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(120.01), SymmetricalTolerance.fromMillimetres(2.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(400.01), SymmetricalTolerance.fromMillimetres(4.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1000.01), SymmetricalTolerance.fromMillimetres(6.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(2000.01), SymmetricalTolerance.fromMillimetres(8.0))
+            ]
+        },
+        {
+            // Dimensions that are the highest in the nominal size range for very coarse tolerance.
+            type: 'Ceiling dimensions',
+            cases: [
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(6), SymmetricalTolerance.fromMillimetres(0.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(30), SymmetricalTolerance.fromMillimetres(1.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(120), SymmetricalTolerance.fromMillimetres(1.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(400), SymmetricalTolerance.fromMillimetres(2.5)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1000), SymmetricalTolerance.fromMillimetres(4.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(2000), SymmetricalTolerance.fromMillimetres(6.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(4000), SymmetricalTolerance.fromMillimetres(8.0))
+            ]
+        },
+        {
+            // Tolerances that are above the very coarse tolerance class. Since there isn't a following tolerance class,
+            // this tolerance class covers any greater tolerance. The tolerance of 100.0 mm is used in every nominal
+            // size range as an example.
+            type: 'Ceiling tolerances',
+            cases: [
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(4), SymmetricalTolerance.fromMillimetres(100.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(10), SymmetricalTolerance.fromMillimetres(100.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(50), SymmetricalTolerance.fromMillimetres(100.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(200), SymmetricalTolerance.fromMillimetres(100.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(800), SymmetricalTolerance.fromMillimetres(100.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(1500), SymmetricalTolerance.fromMillimetres(100.0)),
+                DimensionWithTolerance.fromDimensionAndTolerance(Dimension.fromMillimetres(3000), SymmetricalTolerance.fromMillimetres(100.0))
+            ]
+        }
+    ];
+
+    describe('ISO 2768-v tests', () => {
+        iso2768vTestGroups.forEach(group => {
+            describe(group.type, () => {
+                test.each(group.cases)(`should identify ISO 2768-v for %s`, (dimensionWithTolerance: DimensionWithTolerance) => {
+                        const result = identifier.identifyToleranceStandard(dimensionWithTolerance);
+                        expect(result).toStrictEqual(Iso2768ToleranceStandard.fromToleranceClass('v'));
+                    }
+                );
+            });
+        });
+    });
 });
