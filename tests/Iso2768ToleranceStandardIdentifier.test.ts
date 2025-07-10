@@ -29,6 +29,20 @@ describe('ISO 2768-1 Tolerance Standard Identifier', () => {
         })
     });
 
+    // The tests cover for each nominal size range and their tolerance classes:
+    // - Floor and ceiling dimensions
+    // - Dimensions with exact symmetrical and deviation tolerances
+    // - Dimensions with wider tolerances that are narrower than the next class
+    // - Dimensions with too tight tolerances
+    // - Dimensions with too wide tolerances
+    //
+    // Not all tolerance classes are covered by the nominal size ranges.
+
+    // I gave it a try to parameterize the tests, but I couldn't come up with a
+    // clear solution. They became either too complex or deeply nested and
+    // hard to read. Nevertheless, I think that it might be possible, but
+    // that'll be a challenge for the future.
+
     describe('Nominal size range from 0.5 mm up to 3 mm', () => {
 
         describe('ISO 2768-f', () => {
