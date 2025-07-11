@@ -37,6 +37,17 @@ export class DeviationTolerance implements Tolerance {
         return new DeviationTolerance(upper, lower);
     }
 
+    /**
+     * Static factory method for constructing a deviation tolerance from upper
+     * and lower bounds in micrometres.
+     *
+     * @param upper the upper bound of the tolerance in micrometres.
+     * @param lower the lower bound of the tolerance in micrometres.
+     */
+    static fromUpperAndLowerBoundsInMicrometres(upper: number, lower: number): DeviationTolerance {
+        return new DeviationTolerance(upper * 0.001, lower * 0.001);
+    }
+
     getUpper(): number {
         return this.upper;
     }
