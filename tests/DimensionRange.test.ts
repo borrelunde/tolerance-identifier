@@ -3,6 +3,22 @@ import {Dimension} from "../src/Dimension";
 
 describe('DimensionRange', () => {
 
+    test('Upper bound getter should return the upper bound dimension', () => {
+        const range = DimensionRange.fromAndUpTo(
+            Dimension.fromMillimetres(1.0),
+            Dimension.fromMillimetres(2.0)
+        );
+        expect(range.getUpperBoundInMillimetres()).toEqual(Dimension.fromMillimetres(2.0));
+    });
+
+    test('Lower bound getter should return the lower bound dimension', () => {
+        const range = DimensionRange.fromAndUpTo(
+            Dimension.fromMillimetres(1.0),
+            Dimension.fromMillimetres(2.0)
+        );
+        expect(range.getLowerBoundInMillimetres()).toEqual(Dimension.fromMillimetres(1.0));
+    })
+
     describe('from-and-up-to', () => {
 
         test('Should not contain a dimension less than the lower bound', () => {
