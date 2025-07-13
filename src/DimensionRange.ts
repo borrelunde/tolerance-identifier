@@ -50,11 +50,11 @@ export class DimensionRange {
         return this.strategy.containsDimension(dimension, this.lower, this.upper);
     }
 
-    getUpperBoundInMillimetres() {
+    getUpperBound() {
         return this.upper;
     }
 
-    getLowerBoundInMillimetres() {
+    getLowerBound() {
         return this.lower;
     }
 }

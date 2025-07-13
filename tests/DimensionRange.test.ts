@@ -8,7 +8,7 @@ describe('DimensionRange', () => {
             Dimension.fromMillimetres(1.0),
             Dimension.fromMillimetres(2.0)
         );
-        expect(range.getUpperBoundInMillimetres()).toEqual(Dimension.fromMillimetres(2.0));
+        expect(range.getUpperBound()).toEqual(Dimension.fromMillimetres(2.0));
     });
 
     test('Lower bound getter should return the lower bound dimension', () => {
@@ -16,7 +16,7 @@ describe('DimensionRange', () => {
             Dimension.fromMillimetres(1.0),
             Dimension.fromMillimetres(2.0)
         );
-        expect(range.getLowerBoundInMillimetres()).toEqual(Dimension.fromMillimetres(1.0));
+        expect(range.getLowerBound()).toEqual(Dimension.fromMillimetres(1.0));
     })
 
     describe('from-and-up-to', () => {
