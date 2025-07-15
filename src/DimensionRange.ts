@@ -49,6 +49,14 @@ export class DimensionRange {
     containsDimension(dimension: Dimension): boolean {
         return this.strategy.containsDimension(dimension, this.lower, this.upper);
     }
+
+    getUpperBound() {
+        return this.upper;
+    }
+
+    getLowerBound() {
+        return this.lower;
+    }
 }
 
 /**
