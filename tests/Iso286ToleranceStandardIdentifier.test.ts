@@ -612,15 +612,17 @@ describe('ISO 286-1 Tolerance Standard Identifier', () => {
     describe('Edge cases', () => {
 
         test('Should not identify a tolerance standard for a dimension less than the nominal range', () => {
+            // The tolerance has to match a potential width had the dimension been within range.
             const dimensionWithTolerance: DimensionWithTolerance = DimensionWithTolerance.fromDimensionAndTolerance(
-                Dimension.fromMillimetres(-0.1), SymmetricalTolerance.fromMillimetres(0.0));  // The tolerance is irrelevant.
+                Dimension.fromMillimetres(0.0), SymmetricalTolerance.fromMillimetres(0.005));
             const result: ToleranceStandard | null = identifier.identifyToleranceStandard(dimensionWithTolerance);
             expect(result).toBeNull();
         });
 
         test('Should not identify a tolerance standard for a dimension greater than the nominal range', () => {
+            // The tolerance has to match a potential width had the dimension been within range.
             const dimensionWithTolerance: DimensionWithTolerance = DimensionWithTolerance.fromDimensionAndTolerance(
-                Dimension.fromMillimetres(3150.1), SymmetricalTolerance.fromMillimetres(0.0));  // The tolerance is irrelevant.
+                Dimension.fromMillimetres(3150.1), SymmetricalTolerance.fromMillimetres(1));
             const result: ToleranceStandard | null = identifier.identifyToleranceStandard(dimensionWithTolerance);
             expect(result).toBeNull();
         });
